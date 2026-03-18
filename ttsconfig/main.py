@@ -16,7 +16,7 @@ def speak(text):
     while pygame.mixer.music.get_busy():
         time.sleep(0.1)
     pygame.mixer.music.unload()
-    os.remove(tmp.name)
+    os.remove(tmp.  name)
 
 # -- Record mic to a temp wav file --
 def record(duration=5, sr=16000):
