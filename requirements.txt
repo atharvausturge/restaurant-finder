@@ -1,6 +1,12 @@
-dotenv
+python-dotenv
 googlemaps
 requests
 scipy
+<<<<<<< Updated upstream
 speechrecognition
 pyaudio
+=======
+whisper
+fastapi
+uvicorn[standard]
+>>>>>>> Stashed changes
