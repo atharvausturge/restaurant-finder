@@ -1,8 +1,6 @@
 dotenv
 googlemaps
 requests
-gtts
-pygame
-sounddevice
 scipy
-whisper
+speechrecognition
+pyaudio
