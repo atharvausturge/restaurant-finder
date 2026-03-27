@@ -8,9 +8,7 @@ import requests
 from html import unescape
 
 
-def get_current_location():
-    """Auto-detect location using multiple IP geolocation services."""
-    
+def get_current_location():    
     # Try ip-api.com first (no API key needed, 45 requests/minute)
     try:
         response = requests.get('http://ip-api.com/json/', timeout=5)

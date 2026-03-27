@@ -1,12 +1,12 @@
 python-dotenv
 googlemaps
 requests
-scipy
-<<<<<<< Updated upstream
-speechrecognition
-pyaudio
-=======
-whisper
 fastapi
 uvicorn[standard]
->>>>>>> Stashed changes
+pydantic
+pytesseract
+Pillow
+pyttsx3
+SpeechRecognition
+google-generative-ai
+python-multipart
