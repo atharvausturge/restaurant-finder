@@ -13,10 +13,13 @@ from pydantic import BaseModel, Field, model_validator
 
 from app.services.restaurant_finder import search_restaurants
 
-
 BASE_DIR = Path(__file__).resolve().parent
-PROFILE_PATH = BASE_DIR / "user_profile.json"
-QUESTIONS_PATH = BASE_DIR / "ttsconfig" / "questions.txt"
+APP_DIR = BASE_DIR.parent
+CONFIG_DIR = APP_DIR / "config"
+PROFILE_PATH = CONFIG_DIR / "user_profile.json"
+LEGACY_PROFILE_PATH = BASE_DIR / "user_profile.json"
+QUESTIONS_PATH = CONFIG_DIR / "questions.txt"
+LEGACY_QUESTIONS_PATH = APP_DIR.parent / "ttsconfig" / "questions.txt"
 
 
 class Coordinates(BaseModel):
@@ -63,22 +66,27 @@ class ProfileUpdateRequest(BaseModel):
 
 
 def _load_profile() -> dict[str, Any]:
-    if not PROFILE_PATH.exists():
+    profile_path = PROFILE_PATH if PROFILE_PATH.exists() else LEGACY_PROFILE_PATH
+    if not profile_path.exists():
         return {}
-    with PROFILE_PATH.open("r", encoding="utf-8") as handle:
+    with profile_path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
 
 
 def _save_profile(profile: dict[str, Any]) -> None:
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     with PROFILE_PATH.open("w", encoding="utf-8") as handle:
         json.dump(profile, handle, indent=2, ensure_ascii=False)
 
 
 def _load_questions() -> list[dict[str, str]]:
-    if not QUESTIONS_PATH.exists():
+    questions_path = (
+        QUESTIONS_PATH if QUESTIONS_PATH.exists() else LEGACY_QUESTIONS_PATH
+    )
+    if not questions_path.exists():
         return []
     questions: list[dict[str, str]] = []
-    with QUESTIONS_PATH.open("r", encoding="utf-8") as handle:
+    with questions_path.open("r", encoding="utf-8") as handle:
         for line in handle:
             line = line.strip()
             if not line or line.startswith("#") or "|" not in line:
@@ -135,7 +143,9 @@ def _normalize_directions_route(route: dict[str, Any]) -> dict[str, Any]:
 
 app = FastAPI(title="Restaurant Finder API", version="1.0.0")
 
-allowed_origins = [origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",")]
+allowed_origins = [
+    origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",")
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
@@ -200,7 +210,9 @@ def restaurants_search(payload: RestaurantSearchRequest) -> dict[str, Any]:
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except Exception as error:
-        raise HTTPException(status_code=500, detail=f"Search failed: {error}") from error
+        raise HTTPException(
+            status_code=500, detail=f"Search failed: {error}"
+        ) from error
 
 
 @app.post("/directions")
@@ -217,7 +229,10 @@ def directions(payload: DirectionsRequest) -> dict[str, Any]:
             origin = payload.origin_query or ""
 
         if payload.destination_coords:
-            destination = (payload.destination_coords.lat, payload.destination_coords.lng)
+            destination = (
+                payload.destination_coords.lat,
+                payload.destination_coords.lng,
+            )
         else:
             destination = payload.destination_query or ""
 
