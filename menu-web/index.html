@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tavio Menu Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tavio Menu Builder</h1>
+        
+        <!-- Step 1: Restaurant Info -->
+        <div id="step-1-restaurant">
+            <h2>Restaurant Details</h2>
+            <div class="form-group">
+                <label for="restaurant-location">Location:</label>
+                <input type="text" id="restaurant-location" required autocomplete="off" placeholder="Type a location...">
+                <ul id="location-suggestions" style="list-style: none; padding: 0; margin-top: 5px; border: 1px solid #ccc; display: none; background: white; max-height: 150px; overflow-y: auto;"></ul>
+            </div>
+            <div class="form-group">
+                <label for="restaurant-name">Restaurant Name:</label>
+                <input type="text" id="restaurant-name" required>
+            </div>
+            <button id="btn-start-menu">Start Creating Menu</button>
+        </div>
+
+        <!-- Step 2: Menu Builder -->
+        <div id="step-2-menu" style="display: none;">
+            <h2 id="display-restaurant-info"></h2>
+            
+            <div id="menu-sections">
+                <!-- Sections will be added here dynamically -->
+            </div>
+            
+            <button id="btn-add-section" class="secondary-btn" style="margin-top: 1rem;">+ Add Menu Section</button>
+            <button id="btn-submit-menu" class="primary-btn" style="margin-top: 2rem; display: block;">Save Menu</button>
+        </div>
+    </div>
+
+    <!-- Template for a menu section -->
+    <template id="section-template">
+        <div class="menu-section active" style="margin-top: 1rem; padding: 1rem; border: 1px solid #ccc;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <input type="text" class="section-title" placeholder="Section Name (e.g., Appetizers)" required style="font-size: 1.2rem; font-weight: bold; width: 60%;">
+                <button class="btn-remove-section" style="background: red; color: white;">Remove Section</button>
+            </div>
+            <div class="items-container"></div>
+            <button class="btn-add-item" style="margin-top: 0.5rem;" data-section="">+ Add Item</button>
+        </div>
+    </template>
+
+    <!-- Template for a menu item -->
+    <template id="item-template">
+        <div class="menu-item-form">
+            <button class="btn-remove-item">X</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Item Name:</label>
+                    <input type="text" class="item-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Price:</label>
+                    <input type="number" step="0.01" class="item-price" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea class="item-desc"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Dietary Info (e.g. Halal, Vegan):</label>
+                    <input type="text" class="item-dietary">
+                </div>
+                <div class="form-group">
+                    <label>Spice Level (0: mild, 3: very spice):</label>
+                    <input type="range" class="item-spice" min="0" max="3" value="0" oninput="this.nextElementSibling.value = this.value">
+                    <output>0</output>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Allergens:</label>
+                <div class="allergens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 0.5rem;">
+                    <label><input type="checkbox" value="Tree Nuts"> Tree Nuts</label>
+                    <label><input type="checkbox" value="Peanuts"> Peanuts</label>
+                    <label><input type="checkbox" value="Eggs"> Eggs</label>
+                    <label><input type="checkbox" value="Fish"> Fish</label>
+                    <label><input type="checkbox" value="Milk"> Milk</label>
+                    <label><input type="checkbox" value="Dairy"> Dairy</label>
+                    <label><input type="checkbox" value="Wheat"> Wheat</label>
+                    <label><input type="checkbox" value="Shellfish"> Shellfish</label>
+                    <label><input type="checkbox" value="Crustaceans"> Crustaceans</label>
+                    <label><input type="checkbox" value="Molluscs"> Molluscs</label>
+                    <label><input type="checkbox" value="Gluten"> Gluten</label>
+                    <label><input type="checkbox" value="Celery"> Celery</label>
+                    <label><input type="checkbox" value="Lupin"> Lupin</label>
+                    <label><input type="checkbox" value="Mustard"> Mustard</label>
+                    <label><input type="checkbox" value="Sesame Seeds"> Sesame Seeds</label>
+                    <label><input type="checkbox" value="Soya"> Soya</label>
+                    <label><input type="checkbox" value="Soy"> Soy</label>
+                    <label><input type="checkbox" value="Sulphur Dioxide"> Sulphur Dioxide</label>
+                    <label><input type="checkbox" value="Honey"> Honey</label>
+                    <label><input type="checkbox" value="Corn"> Corn</label>
+                    <label><input type="checkbox" value="Rice"> Rice</label>
+                    <label><input type="checkbox" value="Yeast"> Yeast</label>
+                    <label><input type="checkbox" value="Coconut"> Coconut</label>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <script src="app.js"></script>
+</body>
+</html>

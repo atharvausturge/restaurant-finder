@@ -1,0 +1,22 @@
+# FastAPI Requirements
+fastapi[standard]
+
+# OCR Service
+pillow
+pytesseract
+numpy
+pdfminer.six
+PyMuPDF
+PyPDF2
+pdf2image
+
+# Database Service
+sqlalchemy
+psycopg2
+python-dotenv
+
+# Testing
+pytest
+transformers>=4.30.0
+torch
+datasets
