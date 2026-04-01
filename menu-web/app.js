@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         debounceTimeout = setTimeout(async () => {
             try {
-                const response = await fetch(`http://localhost:8000/discover/places/autocomplete?query=${encodeURIComponent(query)}`);
+                const response = await fetch(`/discover/places/autocomplete?query=${encodeURIComponent(query)}`);
 
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Suppose there's an endpoint to save multiple items
-            const response = await fetch(`http://localhost:8000/restaurants/menus/bulk?restaurant_name=${encodeURIComponent(name)}`, {
+            const response = await fetch(`/restaurants/menus/bulk?restaurant_name=${encodeURIComponent(name)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

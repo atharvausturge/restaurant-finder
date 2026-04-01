@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.api.routes import restaurants, menus, recommendation, discovery
 
 app = FastAPI(title="Tavio")
@@ -16,3 +17,5 @@ app.include_router(restaurants.router)
 app.include_router(menus.router)
 app.include_router(recommendation.router)
 app.include_router(discovery.router)
+
+app.mount("/", StaticFiles(directory="menu-web", html=True), name="menu-web")
