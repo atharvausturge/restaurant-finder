@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float, Boolean, ARRAY, Text
+from sqlalchemy import Column, DoublePrecision, String, Float, Boolean, ARRAY, Text
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
@@ -15,5 +15,7 @@ class Restaurant(Base):
     menu_available = Column(Boolean, default=False)
     dietary_options = Column(ARRAY(String), nullable=True)
     short_summary = Column(Text, nullable=True)
+    lat = Column(DoublePrecision, nullable=True)
+    long = Column(DoublePrecision, nullable=True)
 
     menu_items = relationship("MenuItem", back_populates="restaurant")
