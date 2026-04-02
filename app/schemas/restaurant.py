@@ -43,3 +43,17 @@ class RestaurantSchema(BaseModel):
         default=None,
         description="Short spoken-friendly summary of the restaurant"
     )
+
+    lat: Optional[float] = Field(
+        default=None,
+        ge=-90,
+        le=90,
+        description="Latitude in decimal degrees"
+    )
+
+    long: Optional[float] = Field(
+        default=None,
+        ge=-180,
+        le=180,
+        description="Longitude in decimal degrees"
+    )

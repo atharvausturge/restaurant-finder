@@ -7,17 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const restLocInput = document.getElementById('restaurant-location');
     const displayRestInfo = document.getElementById('display-restaurant-info');
 
-    // Tab elements
     const tabBtns = document.querySelectorAll('.tab-btn');
     const sections = document.querySelectorAll('.menu-section');
 
     const btnAddItems = document.querySelectorAll('.btn-add-item');
     const itemTemplate = document.getElementById('item-template');
 
-    // Suggestion box element
     const suggestionsBox = document.getElementById('location-suggestions');
 
-    // Handle place searching using Google Places API (REST)
     let debounceTimeout;
     restLocInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimeout);
@@ -70,14 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    // Hide suggestions when clicking outside
     document.addEventListener('click', (e) => {
         if (e.target !== restLocInput && e.target !== suggestionsBox) {
             suggestionsBox.style.display = 'none';
         }
     });
 
-    // Go to step 2
     btnStart.addEventListener('click', () => {
         const name = restNameInput.value.trim();
         const loc = restLocInput.value.trim();
@@ -95,17 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAddSection = document.getElementById('btn-add-section');
     const sectionTemplate = document.getElementById('section-template');
 
-    // Add new section
     btnAddSection.addEventListener('click', () => {
         const clone = document.importNode(sectionTemplate.content, true);
         const sectionDiv = clone.querySelector('.menu-section');
 
-        // Remove section
         clone.querySelector('.btn-remove-section').addEventListener('click', (e) => {
             e.target.closest('.menu-section').remove();
         });
 
-        // Add item within section
         const container = clone.querySelector('.items-container');
         clone.querySelector('.btn-add-item').addEventListener('click', () => {
             const itemClone = document.importNode(itemTemplate.content, true);
@@ -123,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = restNameInput.value.trim();
         const loc = restLocInput.value.trim();
 
-        // Generate a random ID for the restaurant and menu items, or just pass the data
         const restaurant_id = restLocInput.dataset.placeId || "rest_" + Math.random().toString(36).substring(2, 9);
 
         const menuItems = [];
@@ -173,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // Suppose there's an endpoint to save multiple items
             const response = await fetch(`/restaurants/menus/bulk?restaurant_name=${encodeURIComponent(name)}`, {
                 method: 'POST',
                 headers: {
