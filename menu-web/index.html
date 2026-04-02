@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tavio Menu Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
+
 <body>
+    <div class="page-bg"></div>
+    <div class="page-glow page-glow-a"></div>
+    <div class="page-glow page-glow-b"></div>
     <div class="container">
-        <h1>Tavio Menu Builder</h1>
-        
-        <div id="step-1-restaurant">
+        <div class="hero">
+
+
+            <h1>Tavio Menu Builder</h1>
+            <p class="subtitle"></p>
+        </div>
+
+
+        <!-- Step 1: Restaurant Info -->
+        <div id="step-1-restaurant" class="panel">
             <h2>Restaurant Details</h2>
             <div class="form-group">
                 <label for="restaurant-location">Location:</label>
-                <input type="text" id="restaurant-location" required autocomplete="off" placeholder="Type a location...">
-                <ul id="location-suggestions" style="list-style: none; padding: 0; margin-top: 5px; border: 1px solid #ccc; display: none; background: white; max-height: 150px; overflow-y: auto;"></ul>
+                <input type="text" id="restaurant-location" required autocomplete="off"
+                    placeholder="Type a location...">
+                <ul id="location-suggestions"></ul>
             </div>
             <div class="form-group">
                 <label for="restaurant-name">Restaurant Name:</label>
@@ -24,29 +43,37 @@
             <button id="btn-start-menu">Start Creating Menu</button>
         </div>
 
-        <div id="step-2-menu" style="display: none;">
+
+        <!-- Step 2: Menu Builder -->
+        <div id="step-2-menu" class="panel" style="display: none;">
             <h2 id="display-restaurant-info"></h2>
-            
+
+
             <div id="menu-sections">
                 <!-- Sections will be added here dynamically -->
             </div>
-            
-            <button id="btn-add-section" class="secondary-btn" style="margin-top: 1rem;">+ Add Menu Section</button>
-            <button id="btn-submit-menu" class="primary-btn" style="margin-top: 2rem; display: block;">Save Menu</button>
+
+
+            <button id="btn-add-section" class="secondary-btn">+ Add Menu Section</button>
+            <button id="btn-submit-menu" class="primary-btn">Save Menu</button>
         </div>
     </div>
 
+
+    <!-- Template for a menu section -->
     <template id="section-template">
-        <div class="menu-section active" style="margin-top: 1rem; padding: 1rem; border: 1px solid #ccc;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <input type="text" class="section-title" placeholder="Section Name (e.g., Appetizers)" required style="font-size: 1.2rem; font-weight: bold; width: 60%;">
-                <button class="btn-remove-section" style="background: red; color: white;">Remove Section</button>
+        <div class="menu-section active">
+            <div class="section-header">
+                <input type="text" class="section-title" placeholder="Section Name (e.g., Appetizers)" required>
+                <button class="btn-remove-section">Remove Section</button>
             </div>
             <div class="items-container"></div>
-            <button class="btn-add-item" style="margin-top: 0.5rem;" data-section="">+ Add Item</button>
+            <button class="btn-add-item" data-section="">+ Add Item</button>
         </div>
     </template>
 
+
+    <!-- Template for a menu item -->
     <template id="item-template">
         <div class="menu-item-form">
             <button class="btn-remove-item">X</button>
@@ -71,13 +98,14 @@
                 </div>
                 <div class="form-group">
                     <label>Spice Level (0: mild, 3: very spice):</label>
-                    <input type="range" class="item-spice" min="0" max="3" value="0" oninput="this.nextElementSibling.value = this.value">
+                    <input type="range" class="item-spice" min="0" max="3" value="0"
+                        oninput="this.nextElementSibling.value = this.value" aria-label="Spice level">
                     <output>0</output>
                 </div>
             </div>
-            <div class="form-group" style="margin-top: 1rem;">
+            <div class="form-group allergen-group">
                 <label>Allergens:</label>
-                <div class="allergens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem; max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 0.5rem;">
+                <div class="allergens-grid">
                     <label><input type="checkbox" value="Tree Nuts"> Tree Nuts</label>
                     <label><input type="checkbox" value="Peanuts"> Peanuts</label>
                     <label><input type="checkbox" value="Eggs"> Eggs</label>
@@ -105,7 +133,10 @@
             </div>
         </div>
     </template>
-    
+
+
     <script src="app.js"></script>
 </body>
+
+
 </html>
